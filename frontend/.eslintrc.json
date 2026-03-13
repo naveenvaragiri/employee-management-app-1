@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "airbnb",
+    "airbnb/hooks"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-explicit-any": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"]
+      }
+    }
+  ]
+}
