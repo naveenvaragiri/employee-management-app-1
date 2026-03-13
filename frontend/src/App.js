@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EmployeeList from './components/EmployeeList';
 import EmployeeForm from './components/EmployeeForm';
+import Chat from './components/Chat';
 import './App.css';
 
 function App() {
@@ -9,6 +10,15 @@ function App() {
   const [error, setError] = useState(null);
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  // Stable userId for this browser session (persisted in sessionStorage).
+  const [chatUserId] = useState(() => {
+    const stored = sessionStorage.getItem('chatUserId');
+    if (stored) return stored;
+    const generated = `user-${Math.random().toString(36).slice(2, 9)}`;
+    sessionStorage.setItem('chatUserId', generated);
+    return generated;
+  });
 
   const fetchEmployees = async (department = '') => {
     try {
@@ -88,6 +98,13 @@ function App() {
             + Add Employee
           </button>
         )}
+        <button
+          className="btn btn-secondary"
+          onClick={() => setShowChat((v) => !v)}
+          style={{ marginLeft: '0.5rem' }}
+        >
+          {showChat ? 'Hide Chat' : '💬 Team Chat'}
+        </button>
       </header>
       <main className="app-main">
         {showForm && (
@@ -108,6 +125,7 @@ function App() {
             onFilter={fetchEmployees}
           />
         )}
+        {showChat && <Chat userId={chatUserId} />}
       </main>
     </div>
   );
